@@ -1,85 +1,182 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Gen Z Cashier 💸</title>
-
-<link rel="stylesheet" href="style.css">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ JZ Receipt Generator | Neo-Struk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
-
 <body>
 
-<div class="bg-glow"></div>
-
-<div class="app">
-
-  <!-- INPUT -->
-  <div class="glass card">
-    <h2>💸 Gen Z Kasir</h2>
-
-    <input id="toko" placeholder="🏪 Nama Toko">
-    <input id="barang" placeholder="📦 Nama Barang">
-    <input id="harga" type="number" placeholder="💰 Harga">
-    <input id="qty" type="number" placeholder="🔢 Qty">
-
-    <!-- SEARCH -->
-    <input id="search" placeholder="🔍 Cari Kode TRX">
-    <button class="btn" onclick="searchTRX()">Cari Struk</button>
-
-    <button class="btn neon" onclick="generate()">Generate 🚀</button>
-    <button class="btn" onclick="download()">Download PNG 📥</button>
-  </div>
-
-  <!-- STRUK -->
-  <div id="receipt" class="receipt glass">
-
-    <div class="center">
-      <div class="title">✨ STRUK PAYMENT ✨</div>
-      <div id="tokoOut">TOKO</div>
+    <div class="glow-bg">
+        <div class="ball ball-1"></div>
+        <div class="ball ball-2"></div>
     </div>
 
-    <div class="line"></div>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fa-solid fa-bolt neon-text"></i> JZ<span>RECEIPT</span>
+        </div>
+        <div class="nav-links">
+            <button class="nav-btn active" data-target="dashboard"><i class="fa-solid fa-chart-pie"></i> <span>Dash</span></button>
+            <button class="nav-btn" data-target="create-receipt"><i class="fa-solid fa-plus"></i> <span>Create</span></button>
+            <button class="nav-btn" data-target="search-receipt"><i class="fa-solid fa-magnifying-glass"></i> <span>Search</span></button>
+        </div>
+    </nav>
 
-    <div class="row"><span>📦 Item</span><span id="itemOut">-</span></div>
-    <div class="row"><span>💰 Price</span><span id="hargaOut">0</span></div>
-    <div class="row"><span>🔢 Qty</span><span id="qtyOut">0</span></div>
+    <main class="main-content">
 
-    <div class="line"></div>
+        <section id="dashboard" class="page-section active">
+            <div class="welcome-header">
+                <h1>Sup, <span class="gradient-text">Creator!</span> 👋</h1>
+                <p>Kelola riwayat transaksi tokomu dengan gaya modern.</p>
+            </div>
 
-    <div class="row total"><span>🧾 TOTAL</span><span id="totalOut">0</span></div>
+            <div class="stats-grid">
+                <div class="glass-card stat-box">
+                    <i class="fa-solid fa-receipt icon-cyan"></i>
+                    <div>
+                        <h3 id="stat-total-count">0</h3>
+                        <p>Total Struk</p>
+                    </div>
+                </div>
+                <div class="glass-card stat-box">
+                    <i class="fa-solid fa-wallet icon-pink"></i>
+                    <div>
+                        <h3 id="stat-total-revenue">Rp 0</h3>
+                        <p>Total Pendapatan</p>
+                    </div>
+                </div>
+            </div>
 
-    <div class="line"></div>
+            <div class="glass-card backup-zone">
+                <h3>Data Management</h3>
+                <div class="backup-buttons">
+                    <button id="btn-export" class="btn btn-secondary"><i class="fa-solid fa-download"></i> Export JSON</button>
+                    <label for="btn-import" class="btn btn-pink">
+                        <i class="fa-solid fa-upload"></i> Import JSON
+                        <input type="file" id="btn-import" accept=".json" style="display: none;">
+                    </label>
+                </div>
+            </div>
 
-    <!-- TRX CODE -->
-    <div class="center" id="trxOut">TRX-</div>
+            <div class="glass-card table-container">
+                <div class="table-header">
+                    <h2>Recent Transactions</h2>
+                </div>
+                <div class="responsive-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Kode Unik</th>
+                                <th>Toko</th>
+                                <th>Tanggal</th>
+                                <th>Total</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-transactions-list">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
-    <div class="line"></div>
+        <section id="create-receipt" class="page-section">
+            <div class="page-title">
+                <h2>⚡ Create <span class="gradient-text">New Receipt</span></h2>
+            </div>
 
-    <!-- QRIS -->
-    <div class="center">
-      <div id="qrcode"></div>
-      <small>scan for pay 💳</small>
-    </div>
+            <div class="creator-grid">
+                <form id="receipt-form" class="glass-card form-wrapper" onsubmit="return false;">
+                    <input type="hidden" id="edit-receipt-id">
+                    
+                    <div class="form-group">
+                        <label>Upload Logo Toko</label>
+                        <div class="file-drop-zone">
+                            <input type="file" id="shop-logo-input" accept="image/*">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <p>Pilih file gambar logo</p>
+                        </div>
+                    </div>
 
-    <div class="line"></div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nama Toko</label>
+                            <input type="text" id="shop-name" placeholder="Contoh: Fjarz Design Store" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Alamat Toko</label>
+                            <input type="text" id="shop-address" placeholder="Jl. Neon Raya No. 11" required>
+                        </div>
+                    </div>
 
-    <!-- BARCODE -->
-    <div class="center">
-      <svg id="barcode"></svg>
-    </div>
+                    <div class="form-group products-section">
+                        <label>Daftar Produk / Jasa</label>
+                        <div id="product-items-container">
+                            </div>
+                        <button type="button" id="btn-add-item" class="btn btn-secondary btn-sm">
+                            <i class="fa-solid fa-plus"></i> Tambah Item
+                        </button>
+                    </div>
 
-    <div class="time" id="time"></div>
+                    <button type="submit" id="btn-save-receipt" class="btn btn-primary btn-block">
+                        <i class="fa-solid fa-floppy-disk"></i> Save & Generate Receipt
+                    </button>
+                </form>
 
-  </div>
+                <div class="preview-wrapper">
+                    <h3>Live Preview</h3>
+                    <div id="live-receipt-preview" class="receipt-paper minimal-preview">
+                        <p style="text-align: center; color: var(--text-muted); padding: 2rem;">Mengisi form akan langsung meng-update preview di sini...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-</div>
+        <section id="search-receipt" class="page-section">
+            <div class="page-title">
+                <h2>🔍 Search <span class="gradient-text">Receipt</span></h2>
+            </div>
 
-<script src="script.js"></script>
+            <div class="glass-card search-box-wrapper">
+                <div class="search-input-group">
+                    <input type="text" id="search-input" placeholder="Masukkan Kode Unik (Contoh: JZ-20260613-A7K9P2)">
+                    <button id="btn-search" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i> Cari</button>
+                </div>
+            </div>
 
+            <div id="search-result-container" class="search-result-zone">
+                </div>
+        </section>
+
+        <section id="detail-receipt" class="page-section">
+            <div class="detail-actions-top">
+                <button id="btn-back-to-dash" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Kembali</button>
+                <div class="download-group">
+                    <button id="btn-download-png" class="btn btn-cyan"><i class="fa-solid fa-file-image"></i> PNG</button>
+                    <button id="btn-download-pdf" class="btn btn-pink"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+                </div>
+            </div>
+
+            <div class="detail-render-center">
+                <div id="printable-receipt-target" class="receipt-paper">
+                    </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="js/storage.js"></script>
+    <script src="js/receipt.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
