@@ -84,8 +84,8 @@ const ReceiptEngine = {
                 </div>
             </div>
             <div class="receipt-footer">
-                <p>Terima Kasih Atas Kunjungan Anda</p>
-                <p>Powered by JZ Receipt</p>
+                <p>Terima Kasih Atas Pembelian Anda</p>
+                <p>Powered by JarzzHosting</p>
                 ${hasQr ? `<div class="receipt-qrcode" id="qr-target-${receipt.id}"></div>` : ''}
             </div>
         `;
