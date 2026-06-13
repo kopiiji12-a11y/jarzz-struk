@@ -343,3 +343,145 @@ td { font-size: 0.95rem; }
     .backup-zone { flex-direction: column; align-items: stretch; }
     .backup-buttons { flex-direction: column; }
                  }
+/* ================= REVISI TOTAL MOBILE FORM UI (SUPER CLEAN) ================= */
+
+/* Susunan layout utama bertumpuk rapi */
+.creator-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Tampilan desktop tetap aman kiri-kanan */
+@media (min-width: 992px) { 
+    .creator-grid { 
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr; 
+    } 
+}
+
+/* Perbaikan total Form Control di Handphone */
+@media (max-width: 600px) {
+    /* Beri jarak antar grup form yang lega */
+    .form-group {
+        margin-bottom: 1rem;
+        gap: 0.4rem;
+    }
+
+    /* Pastikan input text memakan lebar penuh dan teksnya tidak nabrak border */
+    input[type="text"], input[type="number"] {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        font-size: 0.9rem;
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
+    }
+
+    /* Sembunyikan input file bawaan browser yang berantakan */
+    .file-drop-zone {
+        padding: 1.2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.03);
+        border: 2px dashed rgba(255, 255, 255, 0.15);
+    }
+
+    /* Memaksa text 'Pilih File' bawaan agar tidak terlihat/bertumpuk kasar */
+    .file-drop-zone input[type="file"] {
+        font-size: 0; /* Menghilangkan teks bawaan */
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0; /* Membuatnya transparan tapi tetap bisa diklik */
+        cursor: pointer;
+    }
+
+    .file-drop-zone p {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-top: 0.3rem;
+    }
+
+    /* Gabungkan Nama & Alamat Toko menjadi susunan vertikal yang rapi */
+    .form-row {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    /* Desain ulang Baris Produk Dinamis agar terlihat seperti 'Card Item' terpisah */
+    .product-row {
+        display: flex;
+        flex-direction: column; /* Buat vertikal ke bawah */
+        gap: 0.6rem;
+        background: rgba(255, 255, 255, 0.04);
+        padding: 1rem;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        position: relative;
+        margin-bottom: 0.8rem;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    /* Beri sedikit ruang di kanan atas agar input tidak menabrak tombol X */
+    .product-row input.p-name {
+        padding-right: 2.5rem; 
+    }
+
+    /* Posisikan tombol hapus (X) melayang manis di pojok kanan atas */
+    .product-row .remove-row-btn {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: rgba(236, 72, 153, 0.1);
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+    }
+
+    /* Tombol utama dinaikkan sedikit padding-nya agar nyaman ditekan jempol */
+    .btn {
+        padding: 0.9rem 1.5rem;
+        font-size: 0.95rem;
+        border-radius: 14px;
+    }
+
+    #btn-add-item {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+        margin-top: 0.2rem;
+    }
+
+    /* Container bungkus Live Preview */
+    .preview-wrapper {
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .preview-wrapper h3 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        text-align: center;
+        color: var(--text-muted);
+    }
+
+    /* Pastikan kertas struk pas 100% mengikuti lebar card parent-nya */
+    .receipt-paper {
+        width: 100%;
+        max-width: 100%;
+        border-radius: 12px; /* Lebih rounded di HP agar estetik */
+    }
+
+    .minimal-preview {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
