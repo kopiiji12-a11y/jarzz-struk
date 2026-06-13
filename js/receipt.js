@@ -62,6 +62,7 @@ const ReceiptEngine = {
             <div class="receipt-meta">
                 <div class="receipt-meta-row"><span>KODE:</span> <strong>${receipt.id}</strong></div>
                 <div class="receipt-meta-row"><span>TANGGAL:</span> <span>${receipt.date}</span></div>
+                ${receipt.customerNumber ? `<div class="receipt-meta-row"><span>NO. CUST:</span> <span>${receipt.customerNumber}</span></div>` : ''}
             </div>
             <div class="receipt-divider"></div>
             <table class="receipt-table">
