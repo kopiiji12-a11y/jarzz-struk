@@ -186,39 +186,78 @@ td { font-size: 0.95rem; }
 .action-btn:hover { transform: scale(1.2); }
 
 /* ================= FORM ELEMENTS ================= */
-.creator-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-@media (min-width: 992px) { .creator-grid { grid-template-columns: 1.2fr 0.8fr; } }
+/* ================= REVISI RESPONSIF FORM & PREVIEW ================= */
 
-.form-group { margin-bottom: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; }
-.form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-label { font-size: 0.85rem; font-weight: 500; color: var(--text-muted); }
-input, select {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--glass-border);
-    padding: 0.75rem 1rem;
-    border-radius: 12px;
-    color: white;
-    outline: none;
-    transition: 0.3s;
+/* Pastikan grid utama bertumpuk ke bawah di mobile, dan melebar di desktop */
+.creator-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
-input:focus { border-color: var(--primary-light); background: rgba(255, 255, 255, 0.08); }
 
-.file-drop-zone {
-    border: 2px dashed var(--glass-border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    text-align: center;
-    position: relative;
-    cursor: pointer;
-    transition: 0.3s;
+@media (min-width: 992px) { 
+    .creator-grid { 
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr; 
+    } 
 }
-.file-drop-zone:hover { border-color: var(--pink); background: rgba(236, 72, 153, 0.02); }
-.file-drop-zone input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
-.file-drop-zone i { font-size: 1.8rem; color: var(--text-muted); margin-bottom: 0.5rem; }
 
-/* Dynamic Product Row */
-.product-row { display: grid; grid-template-columns: 2.5fr 1fr 1.5fr auto; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center; }
+/* Memperbaiki form row (Nama Toko & Alamat) agar tidak memaksakan 2 kolom di layar sangat kecil */
+@media (max-width: 480px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
 
+/* Memperbaiki baris produk dinamis agar tidak gepeng di mobile */
+.product-row { 
+    display: grid; 
+    grid-template-columns: 2fr 1fr 1.5fr auto; 
+    gap: 0.5rem; 
+    margin-bottom: 0.5rem; 
+    align-items: center; 
+}
+
+@media (max-width: 480px) {
+    .product-row {
+        grid-template-columns: 1fr; /* Buat vertikal di HP agar input nama produk panjang tidak terpotong */
+        background: rgba(255, 255, 255, 0.02);
+        padding: 0.75rem;
+        border-radius: 12px;
+        border: 1px solid var(--glass-border);
+        position: relative;
+    }
+    .product-row input {
+        width: 100%;
+    }
+    /* Taruh tombol hapus (X) di pojok kanan atas baris produk */
+    .product-row .remove-row-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+    }
+}
+
+/* Memperbaiki Live Preview Container agar pas dengan lebar layar HP */
+.preview-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.receipt-paper {
+    width: 100%;
+    max-width: 100%; /* Menghindari kertas struk keluar dari layar */
+    box-sizing: border-box;
+}
+
+.minimal-preview { 
+    transform: scale(1); /* Kembalikan ke scale 1 agar di mobile ukurannya pas & terbaca */
+    opacity: 1; 
+    pointer-events: none; 
+}
 /* ================= REAL MODERN RECEIPT PAPER ================= */
 .receipt-paper {
     background: var(--receipt-bg);
