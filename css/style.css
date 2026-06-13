@@ -342,8 +342,8 @@ td { font-size: 0.95rem; }
     .main-content { padding: 1rem; }
     .backup-zone { flex-direction: column; align-items: stretch; }
     .backup-buttons { flex-direction: column; }
-                 }
-/* ================= REVISI TOTAL MOBILE FORM UI (SUPER CLEAN) ================= */
+}
+/* ================= REVISI FINAL MOBILE UI (FIX KLIK & POSITIONING) ================= */
 
 /* Susunan layout utama bertumpuk rapi */
 .creator-grid {
@@ -362,22 +362,26 @@ td { font-size: 0.95rem; }
 
 /* Perbaikan total Form Control di Handphone */
 @media (max-width: 600px) {
-    /* Beri jarak antar grup form yang lega */
     .form-group {
-        margin-bottom: 1rem;
-        gap: 0.4rem;
+        margin-bottom: 1.2rem;
+        gap: 0.5rem;
+        position: relative; /* Menjaga konteks stack elemen */
     }
 
-    /* Pastikan input text memakan lebar penuh dan teksnya tidak nabrak border */
+    /* Pastikan input text memakan lebar penuh, responsif, dan berada di lapisan atas */
     input[type="text"], input[type="number"] {
         width: 100%;
         padding: 0.85rem 1rem;
         font-size: 0.9rem;
         background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--glass-border);
         border-radius: 12px;
+        color: white;
+        position: relative;
+        z-index: 5; /* Memaksa input berada di atas agar bisa diketuk */
     }
 
-    /* Sembunyikan input file bawaan browser yang berantakan */
+    /* Batasi tinggi area drop zone biar tidak meluber ke bawah */
     .file-drop-zone {
         padding: 1.2rem;
         display: flex;
@@ -386,24 +390,32 @@ td { font-size: 0.95rem; }
         justify-content: center;
         background: rgba(255, 255, 255, 0.03);
         border: 2px dashed rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        position: relative;
+        overflow: hidden; /* Mencegah elemen internal keluar jalur */
+        height: 100px; /* Dikunci tingginya agar aman */
     }
 
-    /* Memaksa text 'Pilih File' bawaan agar tidak terlihat/bertumpuk kasar */
+    /* Memaksa input file bawaan HANYA seukuran kotaknya saja, tidak menutupi form lain */
     .file-drop-zone input[type="file"] {
-        font-size: 0; /* Menghilangkan teks bawaan */
         position: absolute;
-        left: 0;
         top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
-        opacity: 0; /* Membuatnya transparan tapi tetap bisa diklik */
+        opacity: 0;
+        z-index: 2;
         cursor: pointer;
+    }
+
+    .file-drop-zone i {
+        font-size: 1.5rem;
+        margin-bottom: 0.2rem;
     }
 
     .file-drop-zone p {
         font-size: 0.8rem;
         color: var(--text-muted);
-        margin-top: 0.3rem;
     }
 
     /* Gabungkan Nama & Alamat Toko menjadi susunan vertikal yang rapi */
@@ -413,10 +425,10 @@ td { font-size: 0.95rem; }
         gap: 1rem;
     }
 
-    /* Desain ulang Baris Produk Dinamis agar terlihat seperti 'Card Item' terpisah */
+    /* Desain ulang Baris Produk Dinamis */
     .product-row {
         display: flex;
-        flex-direction: column; /* Buat vertikal ke bawah */
+        flex-direction: column;
         gap: 0.6rem;
         background: rgba(255, 255, 255, 0.04);
         padding: 1rem;
@@ -424,10 +436,8 @@ td { font-size: 0.95rem; }
         border: 1px solid rgba(255, 255, 255, 0.08);
         position: relative;
         margin-bottom: 0.8rem;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
     }
 
-    /* Beri sedikit ruang di kanan atas agar input tidak menabrak tombol X */
     .product-row input.p-name {
         padding-right: 2.5rem; 
     }
@@ -445,9 +455,10 @@ td { font-size: 0.95rem; }
         align-items: center;
         justify-content: center;
         font-size: 0.9rem;
+        z-index: 10;
     }
 
-    /* Tombol utama dinaikkan sedikit padding-nya agar nyaman ditekan jempol */
+    /* Tombol utama */
     .btn {
         padding: 0.9rem 1.5rem;
         font-size: 0.95rem;
@@ -473,11 +484,10 @@ td { font-size: 0.95rem; }
         color: var(--text-muted);
     }
 
-    /* Pastikan kertas struk pas 100% mengikuti lebar card parent-nya */
     .receipt-paper {
         width: 100%;
         max-width: 100%;
-        border-radius: 12px; /* Lebih rounded di HP agar estetik */
+        border-radius: 12px;
     }
 
     .minimal-preview {
