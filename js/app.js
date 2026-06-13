@@ -159,7 +159,6 @@ const AppRouter = {
     // DOWNLOAD SISTEM ENGINE: HTML Ke PNG Gambar Gambar
     downloadAsPNG: function(filename) {
         const element = document.getElementById('printable-receipt-target');
-        // Set setting kompresi tinggi kualitas HD
         html2canvas(element, { scale: 3, backgroundColor: '#ffffff' }).then(canvas => {
             const link = document.createElement('a');
             link.download = `${filename}.png`;
@@ -234,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const receiptPayload = {
             id: finalId,
             shopName: document.getElementById('shop-name').value,
-            shopAddress: document.getElementById('shop-address').v
+            shopAddress: document.getElementById('shop-address').value,
             customerNumber: document.getElementById('customer-number').value,
             logo: base64LogoData,
             date: existingId ? StorageEngine.getReceiptById(existingId).date : new Date().toLocaleString('id-ID'),
