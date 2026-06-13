@@ -91,6 +91,7 @@ const AppRouter = {
         document.getElementById('edit-receipt-id').value = receipt.id;
         document.getElementById('shop-name').value = receipt.shopName;
         document.getElementById('shop-address').value = receipt.shopAddress;
+        document.getElementById('customer-number').value = receipt.customerNumber || "";
         base64LogoData = receipt.logo || "";
 
         // Bersihkan & isi ulang item input dinamis
@@ -131,6 +132,7 @@ const AppRouter = {
     updateLivePreview: function() {
         const shopName = document.getElementById('shop-name').value || 'NAMA TOKO ANDA';
         const shopAddress = document.getElementById('shop-address').value || 'ALAMAT TOKO';
+        const customerNumber = document.getElementById('customer-number').value || '';
         
         const items = [];
         document.querySelectorAll('.product-row').forEach(row => {
@@ -144,6 +146,7 @@ const AppRouter = {
             id: document.getElementById('edit-receipt-id').value || 'JZ-YYYYMMDD-XXXXXX',
             shopName,
             shopAddress,
+            customerNumber,
             logo: base64LogoData,
             date: new Date().toLocaleString('id-ID'),
             items: items.length > 0 ? items : [{ name: 'Contoh Item', qty: 1, price: 50000 }],
@@ -199,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hubungkan deteksi pengetikan form text utama dengan preview
     document.getElementById('shop-name').oninput = () => AppRouter.updateLivePreview();
     document.getElementById('shop-address').oninput = () => AppRouter.updateLivePreview();
+    document.getElementById('customer-number').oninput = () => AppRouter.updateLivePreview();
 
     // Mengurus file upload gambar diubah ke string Base64
     document.getElementById('shop-logo-input').onchange = (e) => {
@@ -230,7 +234,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const receiptPayload = {
             id: finalId,
             shopName: document.getElementById('shop-name').value,
-            shopAddress: document.getElementById('shop-address').value,
+            shopAddress: document.getElementById('shop-address').v
+            customerNumber: document.getElementById('customer-number').value,
             logo: base64LogoData,
             date: existingId ? StorageEngine.getReceiptById(existingId).date : new Date().toLocaleString('id-ID'),
             items: items,
