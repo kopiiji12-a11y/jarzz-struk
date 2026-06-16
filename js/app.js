@@ -243,6 +243,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Simpan ke storage local
         StorageEngine.saveReceipt(receiptPayload);
+        fetch('/api/send-struk', {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json'
+},
+body: JSON.stringify(receiptPayload)
+})
+.then(res => res.json())
+.then(data => {
+console.log('API Response:', data);
+})
+.catch(err => {
+console.error('API Error:', err);
+});
+
 
         // Reset form & cache status
         document.getElementById('receipt-form').reset();
